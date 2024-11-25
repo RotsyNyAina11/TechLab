@@ -1,22 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { login, logout } from "../store/features/authSlice";
-import { RootState } from "../store/store";
+import { login } from "../store/features/authSlice";
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material"
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
     const dispatch = useDispatch();
-    const auth = useSelector((state: RootState) => state.auth);
+    const  navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
         dispatch(login({ email, password }));
-    };
-
-    const handleLogout = () => {
-        dispatch(logout());
     };
 
 
@@ -45,7 +41,7 @@ const Login: React.FC = () => {
             >
 
 
-                <Typography variant="h4" gutterBottom>Login Page</Typography>
+                <Typography variant="h4" gutterBottom> Login Page</Typography>
 
                 <Box>
                     <TextField
@@ -89,25 +85,18 @@ const Login: React.FC = () => {
                     </Button>
 
                     <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={handleLogout}
+                        variant="text"
+                        color="inherit"
+                        onClick={ () => navigate("/signup")}
                         sx={{
-                            mt: 2,
-                            fontWeight: "bold",
-                            color: "white"
+                            mt: 1
                         }}
                     >
-                        Logout
+                        Don't have an account? Sign Up 
                     </Button>
+
                 </Box>
             </Paper>
-
-            <Box sx={{ mt: 3, textAlign: "center"}}>
-                <Typography variant="h6">Auth State</Typography>
-                <Typography>Email: {auth.email || "Not logged in "}</Typography>
-                <Typography>Password: {auth.password || "Not logged in "}</Typography>
-            </Box>
        </Container>
     );
 };
